@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,28 @@ public class PlayerController : MonoBehaviour
             movement.z * speed * Time.deltaTime));
 
 
+        GroundCheck();
+    }
 
+    private void GroundCheck()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 1.2f))
+        {
+            string terrainTag = hit.collider.gameObject.tag;
+
+            switch(terrainTag)
+            {
+                case "Fast":
+                    speed = 20f;
+                    break;
+                case "Slow":
+                    speed = 7.5f;
+                    break;
+                default:
+                    speed = 12f;
+                    break;
+            }
+        }
     }
 }
